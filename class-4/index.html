@@ -15,6 +15,14 @@
             })
             //element.innerHTML = parseInt(a)+parseInt(b);
         }
+        let timeout;
+        function debouncepopulate()
+        {
+            clearTimeout(timeout);
+            timeout = setTimeout(function(){
+                populate_div2()
+            }, 1000);
+        }
         async function populate_div2(){
             const element = document.getElementById("finalsum")
             const a = document.getElementById("first_number").value;
@@ -25,9 +33,9 @@
         }
     </script>
     <body>
-        <input id= "first_number" type="text" placeholder="first number"></input><br></br>
-        <input id= "second_number"type="text" placeholder="second number"></input><br></br>
-        <button onclick="populate_div2()">calculate sum</button><br></br>
+        <input oninput = "debouncepopulate()" id= "first_number" type="text" placeholder="first number"></input><br></br>
+        <input oninput = "debouncepopulate()"  id= "second_number"type="text" placeholder="second number"></input><br></br>
+         <button onclick="populate_div2()">calculate sum</button><br></br>
         <div id="finalsum"></div>
     </body>
 </html>
