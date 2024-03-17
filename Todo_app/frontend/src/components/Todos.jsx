@@ -1,17 +1,16 @@
+/* eslint-disable */
 
-export function Todos(){
-
-        return(
-            <div>
-                <h1>
-                    go to gym
-                </h1>
-                <h2>
-                    you need to go to gym.
-                </h2>
-                <button>
-                    mark as completed.
-                </button>
-            </div>
-        )
+export function Todos({todos}){
+        return <div>
+                {todos.map(function(todos){
+                    return <div>
+                            <h1>{todos.title}</h1>
+                            <h2>{todos.description}</h2>
+                            <button>{todos.completed == true ? "completed" : "masrk as completed"}</button>
+                           </div>
+                    
+                })}
+              </div>
+        
 }
+
