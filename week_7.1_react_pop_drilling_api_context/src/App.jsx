@@ -1,50 +1,43 @@
-import { useState,Suspense,lazy } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { BrowserRouter,Routes,Route,useNavigate} from 'react-router-dom';
-//import {Dashboard} from './components/Dashboard'
-//import {Landing} from './components/Landing'
-const Dashboard = lazy(()=> import('./components/Dashboard.jsx'));
-
-const Landing = lazy(()=> import('./components/Landing.jsx'));
-
+import { useState } from 'react'
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import {countAtom} from './store/atoms/count.jsx'
 function App() {
 
-  
   return (
     <div>
-      
-      <div>
-    <BrowserRouter>
-    <Appbar />
-    <Routes>
-      <Route path="/dashboard" element ={<Suspense fallback={"Loading..."}><Dashboard /></Suspense>} />
-      <Route path="/" element ={<Suspense fallback={"Loading..."}><Landing /></Suspense>} />
-      
-    </Routes>
-
-    </BrowserRouter>
-    </div>
+      <RecoilRoot>
+      <Count/>
+      </RecoilRoot>
     </div>
   )
 }
+function Count(){
+  console.log("count re-render");
+  return <div>
+    <CountRender ></CountRender>
+    <Button />
+  </div>
+}
 
+function CountRender(){
+  const count = useRecoilValue(countAtom);
+  return <div>
+    {count}
+  </div>
+  }
+function Button(){
+  const [count,setCount] = useRecoilState(countAtom)
+  return <div>
+    <button onClick={()=>{
+        setCount(count+1)
+    }}> Increase Count
+    </button>
+    <button onClick={()=>{
+      setCount(count-1)
+    }}> Decrease Count
+    </button>
+    </div>
 
-function Appbar(){
-  const navigate = useNavigate();
-return (
-  <div>
-      <button onClick={()=>{
-        navigate("/");
-      }
-      }>Landing</button>
-        <button onClick={()=>{
-          navigate("/Dashboard");
-        }}>Dashboard</button>
-
-      </div>
-)
 }
 
 export default App
